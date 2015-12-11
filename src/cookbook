@@ -1,0 +1,6 @@
+case TP(sym, qm @ QueryMap(Def(QueryScan(query, pred)), mapF)) =>
+      val ab = IR.ArrayBuffer[Any]()(qm.m1)
+      query.table.foreach { value =>
+        __ifThenElse(pred(value), ab += mapF(value), lift(()))
+      }
+      IR.Query(ab)
